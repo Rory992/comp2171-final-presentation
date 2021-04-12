@@ -150,17 +150,22 @@ public class PayApp {
 
     public String[] putEmployee(Employee employee){
         String str;
+        int pos = 0;
+
+        if (employee.getPosition().equals(Position.JUNIORSTAFF)){
+            pos = 1;
+        }
         if (employee.getAddress()!=null){
             str = employee.getTRN()  + "," + employee.getDOB() + "," + employee.getGender() + ","
                     + employee.getEmployeeID() + "," + employee.getName().getFirstName() + "," + employee.getName().getMiddleName()
                     + "," + employee.getName().getLastName() + "," + employee.getAddress().getCountry()
                     + "," + employee.getAddress().getParish() + "," + employee.getAddress().getTown() + "," +
-                    employee.getAddress().getStreet() + "," + employee.getPosition() + "," + employee.getHours();
+                    employee.getAddress().getStreet() + "," + pos + "," + employee.getHours();
         } else {
             str = employee.getTRN() + "," + employee.getDOB() + "," + employee.getGender() + "," + employee.getEmployeeID()
                     + "," + employee.getName().getFirstName() + "," + employee.getName().getMiddleName() + ","
                     + employee.getName().getLastName() + "," +  "" + "," +  "" + "," + "" + "," + "" + "," +
-                    employee.getPosition() + "," + employee.getHours();
+                    pos + "," + employee.getHours();
         }
         return str.split(",",-1);
     }

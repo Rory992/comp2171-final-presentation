@@ -18,20 +18,24 @@ public class ManageNotes {
         notesList.remove(position);
     }
 
-    public void getNoteId (int id) {
+    public String getNoteId (int id) {
+        StringBuilder str = new StringBuilder();
         for (Note note : notesList) {
             if(note.getNoteId()==id) {
-                System.out.println(note.getNote() + "\n");
+                str.append(note.getNote()).append("\n");
             }
         }
+        return str.toString();
     }
 
-    public void getName (String name) {
+    public String getName (String name) {
+        StringBuilder str = new StringBuilder();
         for(Note nt: notesList) {
             if (nt.getNoteName().equalsIgnoreCase(name)) {
-                System.out.println(nt.getNote()+"\n");
+                str.append(nt.getNote()).append("\n");
             }
         }
+        return str.toString();
     }
 
     public void getAll (){

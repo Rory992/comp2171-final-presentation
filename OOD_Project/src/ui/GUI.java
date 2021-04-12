@@ -3,6 +3,7 @@ package ui;
 import app.PayApp;
 import com.itextpdf.text.DocumentException;
 import paysys.Employee;
+import paysys.Note;
 import paysys.Payslip;
 import paysys.Report;
 
@@ -1415,33 +1416,6 @@ public class GUI {
             }
         });
 
-        manageNotes.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-
         genReport.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -1475,17 +1449,303 @@ public class GUI {
 
                         JLabel success = new JLabel();
                         success.setText("<html>" + "SUCCESS" + "<br />" + newReport.getReport() + "</html>");
-                        success.setBounds(10, 80, 400, 500);
+                        success.setBounds(10, 80, 300, 300);
                         sidePanel.add(success);
                         sidePanel.updateUI();
                     }
                 }
                 catch (FileNotFoundException | DocumentException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
-                    error.setBounds(250, 200, 100, 30);
+                    error.setText("OOPS! There was an error.");
+                    error.setBounds(100, 200, 100, 30);
                     error.setForeground(Color.red);
                     sidePanel.add(error);
                     sidePanel.updateUI();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        manageNotes.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
+                    sidePanel.removeAll();
+                    JLabel create = new JLabel("Create A Note");
+                    JLabel review = new JLabel("Review Note");
+                    JLabel rmvNote = new JLabel("Remove A Note");
+
+                    create.setBounds(10, 10, 150, 30);
+                    review.setBounds(10, 40, 150, 30);
+                    rmvNote.setBounds(10, 70, 150, 30);
+
+                    sidePanel.add(create);
+                    sidePanel.add(review);
+                    sidePanel.add(rmvNote);
+                    sidePanel.updateUI();
+
+                    create.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3){
+                                sidePanel.removeAll();
+
+                                JLabel instruction = new JLabel("Enter the employee Id number AND the note");
+                                JLabel id = new JLabel("Employee ID");
+                                JLabel note = new JLabel("New Note");
+
+                                JTextField idNum = new JTextField();
+                                JTextField noteField = new JTextField();
+
+                                instruction.setForeground(new Color(102, 0,153));
+                                instruction.setBounds(20, 20, 200, 30);
+                                id.setBounds(10, 50, 100, 30);
+                                idNum.setBounds(10, 80, 100, 30);
+                                note.setBounds(10, 110, 100, 30);
+                                noteField.setBounds(10, 140, 100, 30);
+
+                                JButton submit = new JButton("SUBMIT");
+                                submit.setBounds(100, 180, 80, 30);
+                                submit.setForeground(Color.blue);
+
+                                sidePanel.add(instruction);
+                                sidePanel.add(id);
+                                sidePanel.add(idNum);
+                                sidePanel.add(note);
+                                sidePanel.add(noteField);
+                                sidePanel.add(submit);
+                                sidePanel.updateUI();
+
+                                submit.addActionListener(e114 -> {
+                                    if (!idNum.getText().strip().equals("") && !noteField.getText().strip().equals("") && app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText()))!=null){
+                                        try {
+                                            String name = app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText())).getName().getFirstName() + " "
+                                                    + app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText())).getName().getLastName();
+
+                                            Note newNote = new Note(name, Short.parseShort(idNum.getText()), noteField.getText().strip());
+                                            app.PDF("notes", newNote.getNote(), newNote.getNoteName() + "Note", noteNum);
+                                            noteNum++;
+                                            app.getNoteList().addNote(newNote);
+
+                                            sidePanel.removeAll();
+                                            JLabel success = new JLabel();
+                                            success.setText("<html>" + "SUCCESS" + "<br />" + "Note on employee with ID " + idNum.getText() + " successfully created." + "</html>");
+                                            success.setBounds(10, 80, 300, 300);
+                                            sidePanel.add(success);
+                                            sidePanel.updateUI();
+
+                                        } catch (DocumentException | FileNotFoundException documentException) {
+                                            documentException.printStackTrace();
+                                            error.setBounds(250, 100, 100, 30);
+                                            error.setForeground(Color.red);
+                                            sidePanel.add(error);
+                                            sidePanel.updateUI();
+                                        }
+                                    } else {
+                                        error.setBounds(250, 100, 100, 30);
+                                        error.setForeground(Color.red);
+                                        sidePanel.add(error);
+                                        sidePanel.updateUI();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
+                    review.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
+                                sidePanel.removeAll();
+
+                                JLabel instruction = new JLabel("Enter employee name OR Id");
+                                JLabel name = new JLabel("Employee Name");
+                                JLabel id = new JLabel("Employee Id");
+
+                                JTextField nameField = new JTextField();
+                                JTextField idNum = new JTextField();
+                                JButton submit = new JButton("SUBMIT");
+
+                                instruction.setForeground(new Color(102, 0,153));
+                                instruction.setBounds(20, 10, 200, 30);
+                                name.setBounds(10, 40, 100, 30);
+                                nameField.setBounds(10, 70, 100, 30);
+                                id.setBounds(10, 100, 100, 30);
+                                idNum.setBounds(10, 130, 100, 30);
+                                submit.setBounds(100, 170, 80, 30);
+
+                                sidePanel.add(instruction);
+                                sidePanel.add(name);
+                                sidePanel.add(nameField);
+                                sidePanel.add(id);
+                                sidePanel.add(idNum);
+                                sidePanel.add(submit);
+                                sidePanel.updateUI();
+
+                                submit.addActionListener(e115 -> {
+                                    try {
+                                        String [] names = nameField.getText().split(" ", 2);
+                                        if (!nameField.getText().strip().equals("") && app.getNoteList().getName(names[0].strip() + " " + names[1].strip()) != null) {
+                                            try {
+                                                sidePanel.removeAll();
+                                                JLabel info = new JLabel("<html>" + app.getNoteList().getName(names[0].strip() + " " + names[1].strip()) + "</html>");
+                                                info.setBounds(20, 10, 150, 300);
+
+                                                sidePanel.add(info);
+                                                sidePanel.updateUI();
+                                            } catch (Exception exception) {
+                                                exception.printStackTrace();
+                                                error.setText("OOPS! There was an error.");
+                                                error.setBounds(100, 200, 100, 30);
+                                                error.setForeground(Color.red);
+                                                sidePanel.add(error);
+                                                sidePanel.updateUI();
+                                            }
+                                        } else if (!idNum.getText().strip().equals("") && app.getNoteList().getNoteId(Integer.parseInt(idNum.getText()))!=null) {
+                                            sidePanel.removeAll();
+                                            JLabel info = new JLabel ("<html>" + app.getNoteList().getNoteId(Integer.parseInt(idNum.getText())) + "</html>");
+                                            info.setBounds(20, 10, 150, 300);
+
+                                            sidePanel.add(info);
+                                            sidePanel.updateUI();
+                                        }
+                                    } catch (Exception exception) {
+                                        exception.printStackTrace();
+                                        error.setText("OOPS! There was an error.");
+                                        error.setBounds(100, 200, 100, 30);
+                                        error.setForeground(Color.red);
+                                        sidePanel.add(error);
+                                        sidePanel.updateUI();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
+                    rmvNote.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
+                                sidePanel.removeAll();
+
+                                JLabel title = new JLabel("Enter the note number to be removed");
+                                JLabel id = new JLabel("Note number");
+                                JTextField idNum = new JTextField();
+
+                                title.setForeground(new Color(102, 0,153));
+                                title.setBounds(20, 20, 250, 30);
+                                id.setBounds(10, 50, 100, 30);
+                                idNum.setBounds(10, 80, 100, 30);
+
+                                JButton submit = new JButton("SUBMIT");
+                                submit.setForeground(Color.blue);
+                                submit.setBounds(100, 120, 80,30);
+
+                                sidePanel.add(title);
+                                sidePanel.add(id);
+                                sidePanel.add(idNum);
+                                sidePanel.add(submit);
+                                sidePanel.updateUI();
+
+                                submit.addActionListener(e116 -> {
+                                    if (!idNum.getText().strip().equals("") && app.getNoteList().getNoteId(Integer.parseInt(idNum.getText()))!=null) {
+                                        try {
+                                            app.getNoteList().removeNote(Integer.parseInt(idNum.getText())-1);
+                                            sidePanel.removeAll();
+                                            JLabel success = new JLabel("SUCCESS! Note deleted.");
+
+                                            success.setBounds(20, 20, 300, 30);
+                                            sidePanel.add(success);
+                                            sidePanel.updateUI();
+                                        } catch (NumberFormatException numberFormatException) {
+                                            numberFormatException.printStackTrace();
+                                            error.setBounds(250, 100, 100, 30);
+                                            error.setForeground(Color.red);
+                                            sidePanel.add(error);
+                                            sidePanel.updateUI();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
                 }
             }
 

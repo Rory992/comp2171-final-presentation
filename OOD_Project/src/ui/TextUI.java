@@ -344,7 +344,6 @@ public class TextUI {
                         }
                     }else if (choice4==3) {
                         System.out.println("Enter The Number Of The Note You Wish To Delete From The List Below\n");
-                        app.getNoteList().getAll();
                         Scanner noteNumber = new Scanner(System.in);
 
                         int number = noteNumber.nextInt();
