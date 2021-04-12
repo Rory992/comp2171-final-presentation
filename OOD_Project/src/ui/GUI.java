@@ -8,8 +8,6 @@ import paysys.Report;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
@@ -29,12 +27,12 @@ public class GUI {
         JPanel mainPanel = new JPanel();
         JPanel sidePanel = new JPanel();
         JFrame frame  = new JFrame("Sunnyside Payment System");
-        frame.setSize(860,650);
+        frame.setSize(700,650);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLayout(null);
 
         mainPanel.setBounds(10, 10, 250, 250);
-        sidePanel.setBounds(270, 10, 550, 500);
+        sidePanel.setBounds(270, 10, 400, 500);
         mainPanel.setBackground(Color.lightGray);
         sidePanel.setBackground(Color.lightGray);
         exitBtn.setBounds(300, 530, 80, 25);
@@ -60,13 +58,13 @@ public class GUI {
         genReport.setBounds(10, 130, 200, 30);
         mainPanel.add(genReport);
 
-        JLabel showAll = new JLabel("Display All Employees Records");
-        showAll.setBounds(10, 160, 200, 30);
-        mainPanel.add(showAll);
-
         JLabel eval = new JLabel("Perform An Evaluation");
-        eval.setBounds(10, 190, 200, 30);
+        eval.setBounds(10, 160, 200, 30);
         mainPanel.add(eval);
+
+//        JLabel showAll = new JLabel("Display All Employees Records");
+//        showAll.setBounds(10, 190, 200, 30);
+//        mainPanel.add(showAll);
 
         manageEmp.addMouseListener(new MouseListener() {
            public void mousePressed(MouseEvent me) {
@@ -659,7 +657,7 @@ public class GUI {
                                    if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
                                        sidePanel.removeAll();
 
-                                       JLabel instruction = new JLabel("Enter employee id AND new country address");
+                                       JLabel instruction = new JLabel("Enter employee Id AND new country in address");
                                        JLabel id = new JLabel("ID Number");
                                        JLabel newCountry = new JLabel("New Country");
 
@@ -667,7 +665,7 @@ public class GUI {
                                        JTextField countryAdd = new JTextField();
 
                                        instruction.setForeground(new Color(102, 0,153));
-                                       instruction.setBounds(20, 10,200, 30 );
+                                       instruction.setBounds(20, 10,250, 30 );
                                        id.setBounds(10, 50, 100, 30);
                                        idNum.setBounds(10, 80, 50, 30);
 
@@ -701,6 +699,460 @@ public class GUI {
                                                } catch (NumberFormatException numberFormatException) {
                                                    numberFormatException.printStackTrace();
                                                    error.setBounds(150, 250, 100, 30);
+                                                   error.setForeground(Color.red);
+                                                   sidePanel.add(error);
+                                                   sidePanel.updateUI();
+                                               }
+                                           } else {
+                                               error.setBounds(150, 250, 100, 30);
+                                               error.setForeground(Color.red);
+                                               sidePanel.add(error);
+                                               sidePanel.updateUI();
+                                           }
+                                       });
+                                   }
+                               }
+
+                               @Override
+                               public void mousePressed(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseReleased(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseEntered(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseExited(MouseEvent e) {
+
+                               }
+                           });
+                           parish.addMouseListener(new MouseListener() {
+                               @Override
+                               public void mouseClicked(MouseEvent e) {
+                                   if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
+                                       sidePanel.removeAll();
+
+                                       JLabel instruction = new JLabel("Enter employee Id AND new parish in address");
+                                       JLabel id = new JLabel("ID Number");
+                                       JLabel parish = new JLabel("New Parish");
+
+                                       JTextField idNum = new JTextField();
+                                       JTextField parishField = new JTextField();
+
+                                       instruction.setForeground(new Color(102, 0,153));
+                                       instruction.setBounds(20, 10,250, 30 );
+                                       id.setBounds(10, 50, 100, 30);
+                                       idNum.setBounds(10, 80, 50, 30);
+
+                                       parish.setBounds(10, 110, 100, 30);
+                                       parishField.setBounds(10, 140, 100, 30);
+
+                                       JButton submit = new JButton("SUBMIT");
+                                       submit.setForeground(Color.blue);
+                                       submit.setBounds(100, 180, 80, 30);
+
+                                       sidePanel.add(instruction);
+                                       sidePanel.add(id);
+                                       sidePanel.add(parish);
+                                       sidePanel.add(idNum);
+                                       sidePanel.add(parishField);
+                                       sidePanel.add(submit);
+                                       sidePanel.updateUI();
+
+                                       submit.addActionListener(e19 -> {
+                                           if (!idNum.getText().equals("") && !parishField.getText().strip().equals("") &&  app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText()))!=null) {
+                                               try {
+                                                   JLabel success = new JLabel();
+                                                   success.setText("<html>" + "SUCCESS" + "<br />" + "Address for " +
+                                                           app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText())).getName().toString()+ " was changed" + "</html>");
+                                                   success.setBounds(20, 20, 200, 200);
+                                                   app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText())).getAddress().setParish(parishField.getText().strip());
+
+                                                   sidePanel.removeAll();
+                                                   sidePanel.add(success);
+                                                   sidePanel.updateUI();
+                                               } catch (NumberFormatException numberFormatException) {
+                                                   numberFormatException.printStackTrace();
+                                                   error.setBounds(150, 250, 100, 30);
+                                                   error.setForeground(Color.red);
+                                                   sidePanel.add(error);
+                                                   sidePanel.updateUI();
+                                               }
+                                           } else {
+                                               error.setBounds(150, 250, 100, 30);
+                                               error.setForeground(Color.red);
+                                               sidePanel.add(error);
+                                               sidePanel.updateUI();
+                                           }
+                                       });
+                                   }
+                               }
+
+                               @Override
+                               public void mousePressed(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseReleased(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseEntered(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseExited(MouseEvent e) {
+
+                               }
+                           });
+                           town.addMouseListener(new MouseListener() {
+                               @Override
+                               public void mouseClicked(MouseEvent e) {
+                                   if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
+                                       sidePanel.removeAll();
+
+                                       JLabel instruction = new JLabel("Enter employee Id AND new town in address");
+                                       JLabel id = new JLabel("ID Number");
+                                       JLabel town = new JLabel("New Town");
+
+                                       JTextField idNum = new JTextField();
+                                       JTextField townField = new JTextField();
+
+                                       instruction.setForeground(new Color(102, 0,153));
+                                       instruction.setBounds(20, 10,250, 30 );
+                                       id.setBounds(10, 50, 100, 30);
+                                       idNum.setBounds(10, 80, 50, 30);
+
+                                       town.setBounds(10, 110, 100, 30);
+                                       townField.setBounds(10, 140, 100, 30);
+
+                                       JButton submit = new JButton("SUBMIT");
+                                       submit.setForeground(Color.blue);
+                                       submit.setBounds(100, 180, 80, 30);
+
+                                       sidePanel.add(instruction);
+                                       sidePanel.add(id);
+                                       sidePanel.add(town);
+                                       sidePanel.add(idNum);
+                                       sidePanel.add(townField);
+                                       sidePanel.add(submit);
+                                       sidePanel.updateUI();
+
+                                       submit.addActionListener(e110 -> {
+                                           if (!idNum.getText().equals("") && !townField.getText().strip().equals("") &&  app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText()))!=null) {
+                                               try {
+                                                   JLabel success = new JLabel();
+                                                   success.setText("<html>" + "SUCCESS" + "<br />" + "Address for " +
+                                                           app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText())).getName().toString()+ " was changed" + "</html>");
+                                                   success.setBounds(20, 20, 200, 200);
+                                                   app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText())).getAddress().setTown(townField.getText().strip());
+
+                                                   sidePanel.removeAll();
+                                                   sidePanel.add(success);
+                                                   sidePanel.updateUI();
+                                               } catch (NumberFormatException numberFormatException) {
+                                                   numberFormatException.printStackTrace();
+                                                   error.setBounds(150, 250, 100, 30);
+                                                   error.setForeground(Color.red);
+                                                   sidePanel.add(error);
+                                                   sidePanel.updateUI();
+                                               }
+                                           } else {
+                                               error.setBounds(150, 250, 100, 30);
+                                               error.setForeground(Color.red);
+                                               sidePanel.add(error);
+                                               sidePanel.updateUI();
+                                           }
+                                       });
+                                   }
+                               }
+
+                               @Override
+                               public void mousePressed(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseReleased(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseEntered(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseExited(MouseEvent e) {
+
+                               }
+                           });
+                           street.addMouseListener(new MouseListener() {
+                               @Override
+                               public void mouseClicked(MouseEvent e) {
+                                   if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
+                                       sidePanel.removeAll();
+
+                                       JLabel instruction = new JLabel("Enter employee Id AND new street in address");
+                                       JLabel id = new JLabel("ID Number");
+                                       JLabel street = new JLabel("New Street");
+
+                                       JTextField idNum = new JTextField();
+                                       JTextField streetField = new JTextField();
+
+                                       instruction.setForeground(new Color(102, 0,153));
+                                       instruction.setBounds(20, 10,250, 30 );
+                                       id.setBounds(10, 50, 100, 30);
+                                       idNum.setBounds(10, 80, 50, 30);
+
+                                       street.setBounds(10, 110, 100, 30);
+                                       streetField.setBounds(10, 140, 100, 30);
+
+                                       JButton submit = new JButton("SUBMIT");
+                                       submit.setForeground(Color.blue);
+                                       submit.setBounds(100, 180, 80, 30);
+
+                                       sidePanel.add(instruction);
+                                       sidePanel.add(id);
+                                       sidePanel.add(street);
+                                       sidePanel.add(idNum);
+                                       sidePanel.add(streetField);
+                                       sidePanel.add(submit);
+                                       sidePanel.updateUI();
+
+                                       submit.addActionListener(e111 -> {
+                                           if (!idNum.getText().equals("") && !streetField.getText().strip().equals("") &&  app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText()))!=null) {
+                                               try {
+                                                   JLabel success = new JLabel();
+                                                   success.setText("<html>" + "SUCCESS" + "<br />" + "Address for " +
+                                                           app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText())).getName().toString()+ " was changed" + "</html>");
+                                                   success.setBounds(20, 20, 200, 200);
+                                                   app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText())).getAddress().setStreet(streetField.getText().strip());
+
+                                                   sidePanel.removeAll();
+                                                   sidePanel.add(success);
+                                                   sidePanel.updateUI();
+                                               } catch (NumberFormatException numberFormatException) {
+                                                   numberFormatException.printStackTrace();
+                                                   error.setBounds(150, 250, 100, 30);
+                                                   error.setForeground(Color.red);
+                                                   sidePanel.add(error);
+                                                   sidePanel.updateUI();
+                                               }
+                                           } else {
+                                               error.setBounds(150, 250, 100, 30);
+                                               error.setForeground(Color.red);
+                                               sidePanel.add(error);
+                                               sidePanel.updateUI();
+                                           }
+                                       });
+                                   }
+                               }
+
+                               @Override
+                               public void mousePressed(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseReleased(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseEntered(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseExited(MouseEvent e) {
+
+                               }
+                           });
+                       }
+                   }
+
+                   @Override
+                   public void mousePressed(MouseEvent e) {
+
+                   }
+
+                   @Override
+                   public void mouseReleased(MouseEvent e) {
+
+                   }
+
+                   @Override
+                   public void mouseEntered(MouseEvent e) {
+
+                   }
+
+                   @Override
+                   public void mouseExited(MouseEvent e) {
+
+                   }
+               });
+
+               updateHrs.addMouseListener(new MouseListener() {
+                   @Override
+                   public void mouseClicked(MouseEvent e) {
+                       if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
+                           sidePanel.removeAll();
+
+                           JLabel addHrs = new JLabel("Add Hours To Employee Record");
+                           JLabel rmvHrs = new JLabel("Remove Hours From Employee Record");
+
+                           addHrs.setBounds(10, 10, 250, 30);
+                           rmvHrs.setBounds(10, 40, 250, 30);
+
+                           sidePanel.add(addHrs);
+                           sidePanel.add(rmvHrs);
+                           sidePanel.updateUI();
+
+                           addHrs.addMouseListener(new MouseListener() {
+                               @Override
+                               public void mouseClicked(MouseEvent e) {
+                                   if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3){
+                                       sidePanel.removeAll();
+
+                                       JLabel instruction = new JLabel("Enter employee Id AND hours to be added");
+                                       JLabel id = new JLabel("Employee ID");
+                                       JLabel hours = new JLabel("Hours");
+
+                                       JTextField idNum = new JTextField();
+                                       JTextField hrsField = new JTextField();
+
+                                       instruction.setForeground(new Color(102, 0,153));
+                                       instruction.setBounds(20, 20, 300, 30);
+                                       id.setBounds(10, 50, 100, 30);
+                                       idNum.setBounds(10, 80, 100, 30);
+                                       hours.setBounds(10, 110, 100, 30);
+                                       hrsField.setBounds(10, 140, 100, 30);
+
+                                       JButton submit = new JButton("SUBMIT");
+                                       submit.setBounds(100, 180, 80, 30);
+                                       submit.setForeground(Color.blue);
+
+                                       sidePanel.add(instruction);
+                                       sidePanel.add(id);
+                                       sidePanel.add(idNum);
+                                       sidePanel.add(hours);
+                                       sidePanel.add(hrsField);
+                                       sidePanel.add(submit);
+                                       sidePanel.updateUI();
+
+                                       submit.addActionListener(e112 ->{
+                                           if (!idNum.getText().strip().equals("") && !hrsField.getText().strip().equals("") && app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText()))!=null){
+                                               try {
+                                                   app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText())).setHours(Float.parseFloat(hrsField.getText()));
+                                                   sidePanel.removeAll();
+                                                   JLabel success = new JLabel();
+                                                   success.setText("<html>" + "SUCCESS" + "<br />" + hrsField.getText() + " Hours Has Been Added To Employee With ID " + idNum.getText() + "</html>");
+                                                   success.setBounds(10, 50, 300, 200);
+
+                                                   sidePanel.add(success);
+                                                   sidePanel.updateUI();
+                                               } catch (NumberFormatException numberFormatException) {
+                                                   numberFormatException.printStackTrace();
+                                                   error.setBounds(150, 250, 100, 30);
+                                                   error.setForeground(Color.red);
+                                                   sidePanel.add(error);
+                                                   sidePanel.updateUI();
+                                               }
+                                           } else {
+                                               error.setBounds(150, 250, 100, 30);
+                                               error.setForeground(Color.red);
+                                               sidePanel.add(error);
+                                               sidePanel.updateUI();
+                                           }
+                                       });
+                                   }
+                               }
+
+                               @Override
+                               public void mousePressed(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseReleased(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseEntered(MouseEvent e) {
+
+                               }
+
+                               @Override
+                               public void mouseExited(MouseEvent e) {
+
+                               }
+                           });
+                           rmvHrs.addMouseListener(new MouseListener() {
+                               @Override
+                               public void mouseClicked(MouseEvent e) {
+                                   if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
+                                       sidePanel.removeAll();
+
+                                       JLabel instruction = new JLabel("Enter employee Id AND hours to be subtracted");
+                                       JLabel id = new JLabel("Employee ID");
+                                       JLabel hours = new JLabel("Hours");
+
+                                       JTextField idNum = new JTextField();
+                                       JTextField hrsField = new JTextField();
+
+                                       instruction.setForeground(new Color(102, 0,153));
+                                       instruction.setBounds(20, 20, 300, 30);
+                                       id.setBounds(10, 50, 100, 30);
+                                       idNum.setBounds(10, 80, 100, 30);
+                                       hours.setBounds(10, 110, 100, 30);
+                                       hrsField.setBounds(10, 140, 100, 30);
+
+                                       JButton submit = new JButton("SUBMIT");
+                                       submit.setBounds(100, 180, 80, 30);
+                                       submit.setForeground(Color.blue);
+
+                                       sidePanel.add(instruction);
+                                       sidePanel.add(id);
+                                       sidePanel.add(idNum);
+                                       sidePanel.add(hours);
+                                       sidePanel.add(hrsField);
+                                       sidePanel.add(submit);
+                                       sidePanel.updateUI();
+
+                                       submit.addActionListener(e113 -> {
+                                           if (!idNum.getText().strip().equals("") && !hrsField.getText().strip().equals("") && app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText()))!=null){
+                                               if (app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText())).getHours() >= Float.parseFloat(hrsField.getText())) {
+                                                   try {
+                                                       app.getEmployeeList().getEmployee(Integer.parseInt(idNum.getText())).takeHours(Float.parseFloat(hrsField.getText()));
+                                                       sidePanel.removeAll();
+                                                       JLabel success = new JLabel();
+                                                       success.setText("<html>" + "SUCCESS" + "<br />" + hrsField.getText() + " Hours Has Been Removed From Employee With ID " + idNum.getText() + "</html>");
+                                                       success.setBounds(10, 50, 300, 200);
+
+                                                       sidePanel.add(success);
+                                                       sidePanel.updateUI();
+                                                   } catch (NumberFormatException numberFormatException) {
+                                                       numberFormatException.printStackTrace();
+                                                       error.setBounds(150, 250, 100, 30);
+                                                       error.setForeground(Color.red);
+                                                       sidePanel.add(error);
+                                                       sidePanel.updateUI();
+                                                   }
+                                               } else {
+                                                   error.setBounds(150, 250, 300, 30);
+                                                   error.setText("Hours on file is less than input. CANNOT SUBTRACT!");
                                                    error.setForeground(Color.red);
                                                    sidePanel.add(error);
                                                    sidePanel.updateUI();
@@ -1092,6 +1544,305 @@ public class GUI {
     }
 
     public void letsGo (PayApp app) {
+        JPanel mainPanel = new JPanel();
+        JPanel sidePanel = new JPanel();
+        JFrame frame  = new JFrame("Sunnyside Payment System");
+        frame.setSize(700,650);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setLayout(null);
 
+        mainPanel.setBounds(10, 10, 250, 250);
+        sidePanel.setBounds(270, 10, 400, 500);
+        mainPanel.setBackground(Color.lightGray);
+        sidePanel.setBackground(Color.lightGray);
+        exitBtn.setBounds(300, 530, 80, 25);
+        exitBtn.setForeground(Color.red);
+
+        mainPanel.setLayout(null);
+        sidePanel.setLayout(null);
+
+        genPayslip.setBounds(10, 10, 200, 30);
+
+        review.setBounds(10, 40, 200, 30);
+        mainPanel.add(review);
+        mainPanel.add(genPayslip);
+
+        genReport.setBounds(10, 70, 200, 30);
+        mainPanel.add(genReport);
+
+        genPayslip.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                sidePanel.removeAll();
+                JLabel fName = new JLabel("Employee First Name");
+                JLabel lName = new JLabel("Employee Last Name");
+                JLabel bonus = new JLabel("Optional - Bonus");
+                JLabel deduction = new JLabel("Optional - Deductions");
+
+                JTextArea name1 = new JTextArea();
+                JTextArea name2 = new JTextArea();
+                JTextArea bn = new JTextArea();
+                JTextArea ded = new JTextArea();
+
+                if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
+                    fName.setBounds(10, 10, 200, 30);
+                    name1.setBounds(10, 40, 100, 30);
+
+                    lName.setBounds(10, 70, 200, 30);
+                    name2.setBounds(10, 100, 100, 30);
+
+                    bonus.setBounds(10, 130, 200, 30);
+                    bn.setBounds(10, 160, 100, 30);
+
+                    deduction.setBounds(10, 190, 200, 30);
+                    ded.setBounds(10, 210, 100, 30);
+                    JButton submit = new JButton("SUBMIT");
+
+                    submit.setBounds(200, 250, 80, 30);
+                    submit.setForeground(Color.blue);
+
+                    sidePanel.add(fName);
+                    sidePanel.add(lName);
+                    sidePanel.add(bonus);
+                    sidePanel.add(deduction);
+                    sidePanel.add(name1);
+                    sidePanel.add(name2);
+                    sidePanel.add(bn);
+                    sidePanel.add(ded);
+                    sidePanel.add(submit);
+                    sidePanel.updateUI();
+
+                    submit.addActionListener(e1 -> {
+                        try{
+                            Employee emp1 = app.getEmployeeList().getEmployee(name1.getText().strip(), name2.getText().strip());
+                            if (bn.getText()!=null && ded.getText()!=null) {
+                                if (emp1 != null) {
+                                    String name = emp1.getName().getFirstName() + " " + emp1.getName().getLastName();
+                                    Payslip pay = new Payslip(name, emp1.getTRN(), emp1.getHours(), emp1.getEmployeeID(),
+                                            app.getRate(emp1), Float.parseFloat(bn.getText()), Float.parseFloat(ded.getText()));
+                                    app.PDF("payslips", pay.getPayslip(), pay.getName() + "Payslip", payslipNum);
+                                    app.getPayslipList().addPayslip(pay);
+                                    app.getEmployeeList().getEmployee(name1.getText().strip(), name2.getText().strip()).resetHours();
+                                    payslipNum++;
+                                    sidePanel.removeAll();
+                                    JLabel success = new JLabel();
+                                    success.setBounds(100, 100, 100, 30);
+                                    success.setForeground(Color.green);
+                                    sidePanel.add(success);
+                                    sidePanel.updateUI();
+                                }
+                            } else {
+                                String name = emp1.getName().getFirstName() + " " + emp1.getName().getLastName();
+                                Payslip pay = new Payslip(name, emp1.getTRN(), emp1.getHours(), emp1.getEmployeeID(), app.getRate(emp1));
+                                app.PDF("payslips", pay.getPayslip(),pay.getName() + "Payslip", payslipNum);
+                                app.getPayslipList().addPayslip(pay);
+                                app.getEmployeeList().getEmployee(name1.getText().strip(), name2.getText().strip()).resetHours();
+                                payslipNum++;
+                                sidePanel.removeAll();
+                                JLabel success = new JLabel();
+                                success.setBounds(250, 200, 100, 30);
+                                success.setForeground(Color.green);
+                                sidePanel.add(success);
+                                sidePanel.updateUI();
+                            }
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                            error.setBounds(250, 200, 100, 30);
+                            error.setForeground(Color.red);
+                            sidePanel.add(error);
+                            sidePanel.updateUI();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        review.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
+                    sidePanel.removeAll();
+
+                    JLabel heading = new JLabel("Enter a name OR id number");
+                    JLabel name = new JLabel("Review By Name");
+                    JLabel id = new JLabel("Review By Id Number");
+
+                    JTextField empName = new JTextField();
+                    JTextField empId = new JTextField();
+                    JButton submit = new JButton("SUBMIT");
+
+                    heading.setForeground(new Color(102, 0,153));
+                    heading.setBounds(100, 10, 200, 30);
+                    name.setBounds(10, 40, 150, 30);
+                    empName.setBounds(10, 70, 100, 30);
+                    id.setBounds(10, 100, 150, 30);
+                    empId.setBounds(10, 130, 100, 30);
+                    submit.setBounds(100, 190, 80, 30);
+                    submit.setForeground(Color.blue);
+
+                    sidePanel.add(heading);
+                    sidePanel.add(name);
+                    sidePanel.add(id);
+                    sidePanel.add(empName);
+                    sidePanel.add(empId);
+                    sidePanel.add(submit);
+                    sidePanel.updateUI();
+
+                    submit.addActionListener(e14 -> {
+                        if (!empName.getText().equals("")) {
+                            try{
+                                String [] names = empName.getText().split(" ", 2);
+                                if (app.getEmployeeList().getEmployee(names[0].strip(), names[1].strip()) != null){
+                                    sidePanel.removeAll();
+                                    JLabel success = new JLabel();
+                                    success.setText("<html>" + "SUCCESS" + "<br />" + app.getEmployeeList().getEmployee(names[0].strip(), names[1].strip()).toString() + "</html>");
+                                    success.setBounds(10, 50, 300, 200);
+
+                                    sidePanel.add(success);
+                                    sidePanel.updateUI();
+                                }
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                                error.setBounds(150, 250, 100, 30);
+                                error.setForeground(Color.red);
+                                sidePanel.add(error);
+                                sidePanel.updateUI();
+                            }
+                        } else  if (!empId.getText().equals("") && app.getEmployeeList().getEmployee(Integer.parseInt(empId.getText())) != null) {
+                            try {
+                                if (!empId.getText().equals("") && app.getEmployeeList().getEmployee(Integer.parseInt(empId.getText())) != null) {
+                                    sidePanel.removeAll();
+                                    JLabel success = new JLabel();
+                                    success.setText("<html>" + "SUCCESS" + "<br />" + app.getEmployeeList().getEmployee(Integer.parseInt(empId.getText())).toString() + "</html>");
+                                    success.setBounds(10, 50, 100, 200);
+
+                                    sidePanel.add(success);
+                                    sidePanel.updateUI();
+                                }
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                                error.setBounds(150, 250, 100, 30);
+                                error.setForeground(Color.red);
+                                sidePanel.add(error);
+                                sidePanel.updateUI();
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        genReport.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JLabel wait = new JLabel("Please Wait For Report To Be Generated");
+                sidePanel.removeAll();
+
+                wait.setBounds(100, 50, 300, 30);
+                wait.setForeground(new Color(102, 0,153));
+
+                sidePanel.add(wait);
+                sidePanel.updateUI();
+
+                try{
+                    float total = 0;
+                    float bonus = 0;
+                    int size = app.getPayslipList().getList().size();
+                    StringBuilder rpt = new StringBuilder();
+
+                    if (app.getPayslipList().getList()!=null){
+                        for (Payslip slip : app.getPayslipList().getList()){
+                            rpt.append("A payslip was generated for ").append(slip.getName()).append(", and was paid ").append(slip.getSalary()).append(". With a bonus of ").append(slip.getBonus()).append(":");
+                            total+=Float.parseFloat(slip.getSalary());
+                            bonus+=slip.getBonus();
+                        }
+
+                        String [] employeeSlips = rpt.toString().split(":", -1);
+                        Report newReport = new Report(size, bonus, total, employeeSlips);
+                        app.PDF("reports", newReport.getReport(), "Report", reportNum);
+                        reportNum++;
+                        app.getReportList().addReport(newReport);
+
+                        JLabel success = new JLabel();
+                        success.setText("<html>" + "SUCCESS" + "<br />" + newReport.getReport() + "</html>");
+                        success.setBounds(10, 80, 400, 500);
+                        sidePanel.add(success);
+                        sidePanel.updateUI();
+                    }
+                }
+                catch (FileNotFoundException | DocumentException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                    error.setBounds(250, 200, 100, 30);
+                    error.setForeground(Color.red);
+                    sidePanel.add(error);
+                    sidePanel.updateUI();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        frame.add(mainPanel);
+        frame.add(sidePanel);
+        frame.add(exitBtn);
+        frame.setVisible(true);
     }
 }
