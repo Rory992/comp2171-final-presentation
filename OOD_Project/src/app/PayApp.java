@@ -144,7 +144,6 @@ public class PayApp {
         for (Report report : getReportList().getList()) {
             reportData.putNext(putReport(report));
         }
-        System.out.println("\n\nTHANK YOU FOR USING OUR APPLICATION.");
         System.exit(0);
     }
 

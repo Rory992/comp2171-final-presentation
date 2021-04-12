@@ -9,9 +9,12 @@ import paysys.Report;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Objects;
 
 public class GUI {
@@ -1797,6 +1800,21 @@ public class GUI {
             }
         });
 
+        exitBtn.addActionListener(e -> {
+            sidePanel.removeAll();
+            JLabel success = new JLabel("THANK YOU FOR USING OUR APPLICATION");
+            success.setForeground(new Color(102, 0,153));
+            success.setBounds(100, 50, 300, 50);
+            sidePanel.add(success);
+            sidePanel.updateUI();
+
+            try {
+                app.shutDown();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+
         frame.add(mainPanel);
         frame.add(sidePanel);
         frame.add(exitBtn);
@@ -2097,6 +2115,21 @@ public class GUI {
             @Override
             public void mouseExited(MouseEvent e) {
 
+            }
+        });
+
+        exitBtn.addActionListener(e -> {
+            sidePanel.removeAll();
+            JLabel success = new JLabel("THANK YOU FOR USING OUR APPLICATION");
+            success.setForeground(new Color(102, 0,153));
+            success.setBounds(100, 50, 300, 50);
+            sidePanel.add(success);
+            sidePanel.updateUI();
+
+            try {
+                app.shutDown();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
         });
 

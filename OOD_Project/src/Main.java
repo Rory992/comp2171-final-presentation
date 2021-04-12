@@ -14,7 +14,7 @@ public class Main implements ActionListener {
     GUI gui = new GUI();
     static JFrame frame  = new JFrame("Payment System Login");
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         JPanel panel = new JPanel();
         frame.setSize(350,250);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
